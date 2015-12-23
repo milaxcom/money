@@ -1,6 +1,6 @@
 {
     "name": "milax/money",
-    "description": "",
+	"license": "ISC",
     "authors": [
         {
             "name": "Eugene Min",
