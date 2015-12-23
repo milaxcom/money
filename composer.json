@@ -1,6 +1,7 @@
 {
     "name": "milax/money",
 	"license": "ISC",
+	"description": "Small class for money manipulation.",
     "authors": [
         {
             "name": "Eugene Min",
