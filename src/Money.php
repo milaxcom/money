@@ -49,4 +49,26 @@ class Money
 		
 		return (float) $number / (integer) $decimals;
 	} 
+	
+	/**
+	 * Format integer to K format for games..
+	 * 
+	 * @access public
+	 * @static
+	 * @param int $amount
+	 * @param int $round (default: 1000)
+	 * @param string $suffix (default: 'K')
+	 * @return string
+	 */
+	public static function goldFormat($amount, $round = 1000, $suffix = 'k')
+	{
+		$i = 0;
+		while ($amount >= 1000) {
+			$amount = $amount / 1000;
+			$i++;
+		}
+		
+		return $amount . str_repeat($suffix, $i);
+
+	}
 }
