@@ -19,12 +19,13 @@ class Money
 	 */
 	public static function toString($number, Currency $currency, $float = false)
 	{
-		$value = self::toNumber($number, $currency, $float);
-		
-		if ((substr($number, strlen($number) - $currency->decimals, strlen($number)) == 00))
+		if (!$float && substr($number, strlen($number) - $currency->decimals, strlen($number)) == 00) {
+			$value = self::toNumber($number, $currency, false);
 			$value = number_format($value);
-		else
+		} else {
+			$value = self::toNumber($number, $currency, true);
 			$value = number_format($value, $currency->decimals);
+		}
 		
 		switch ($currency->display) {
 			case 'before':
