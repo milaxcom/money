@@ -19,8 +19,8 @@ class Money
 	 */
 	public static function toString($number, Currency $currency, $integer = false)
 	{
-		if ($float)
-			$value = self::toNumber($number, $currency, $integer);
+		if ($integer)
+			$value = number_format(self::toNumber($number, $currency, $integer)); 
 		else
 			$value = number_format(self::toNumber($number, $currency, $integer), $currency->decimals); 
 		
