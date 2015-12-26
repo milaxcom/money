@@ -14,15 +14,15 @@ class Money
 	 * @static
 	 * @param mixed $number
 	 * @param Currency $currency
-	 * @param bool $integer (default: false)
+	 * @param bool $float (default: false)
 	 * @return string
 	 */
-	public static function toString($number, Currency $currency, $integer = false)
+	public static function toString($number, Currency $currency, $float = false)
 	{
-		if ($integer)
-			$value = number_format(self::toNumber($number, $currency, $integer)); 
+		if ($float)
+			$value = number_format(self::toNumber($number, $currency, $float), $currency->decimals);
 		else
-			$value = number_format(self::toNumber($number, $currency, $integer), $currency->decimals); 
+			$value = number_format(self::toNumber($number, $currency, $float));
 		
 		switch ($currency->display) {
 			case 'before':
@@ -39,10 +39,10 @@ class Money
 	 * @static
 	 * @param mixed $number
 	 * @param Currency $currency
-	 * @param bool $integer (default: false)
+	 * @param bool $float (default: false)
 	 * @return mixed
 	 */
-	public static function toNumber($number, Currency $currency, $integer = false)
+	public static function toNumber($number, Currency $currency, $float = false)
 	{
 		$decimals = "1";
 		for ($i = 0; $i != $currency->decimals; $i++) {
@@ -51,7 +51,7 @@ class Money
 		
 		$result = (float) $number / (integer) $decimals;
 		
-		return ($integer) ? (integer) $result : $result;
+		return ($float) ? $result : (integer) $result;
 	} 
 	
 	/**
