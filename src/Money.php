@@ -14,24 +14,18 @@ class Money
 	 * @static
 	 * @param mixed $number
 	 * @param Currency $currency
-	 * @param bool $float (default: false)
 	 * @return string
 	 */
-	public static function toString($number, Currency $currency, $float = false)
+	public static function toString($number, Currency $currency)
 	{
-		if (!$float && substr($number, strlen($number) - $currency->decimals, strlen($number)) == 00) {
-			$value = self::toNumber($number, $currency, false);
-			$value = number_format($value);
-		} else {
-			$value = self::toNumber($number, $currency, true);
-			$value = number_format($value, $currency->decimals);
-		}
+		
+		$value = self::toNumber($number, $currency);
 		
 		switch ($currency->display) {
 			case 'before':
-				return $currency->name . $value;
+				return $currency->short . $value;
 			case 'after':
-				return $value . $currency->name;
+				return $value . $currency->short;
 		}
 	}
 	
@@ -42,26 +36,11 @@ class Money
 	 * @static
 	 * @param mixed $number
 	 * @param Currency $currency
-	 * @param bool $float (default: false)
 	 * @return mixed
 	 */
-	public static function toNumber($number, Currency $currency, $float = false)
+	public static function toNumber($number, Currency $currency)
 	{
-		$decimals = "1";
-		for ($i = 0; $i != $currency->decimals; $i++) {
-			$decimals .= "0";
-		}
-		
-		$result = (float) $number / (integer) $decimals;
-		
-		if ($float) {
-			return $result;
-		} else {
-			if ((substr($number, strlen($number) - $currency->decimals, strlen($number)) == 00))
-				return $result;
-			else
-				return (integer) $result;
-		}
+		return $number / $currency->basic;
 	} 
 	
 	/**
